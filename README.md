@@ -1,2 +1,2 @@
 # php-string-formatter
-A simple and configurable string formatting pipeline for PHP. Define formatting rules using a compact DSL like padLeft:10:0;replace:_:space.
+php-string-formatter lets you define flexible string transformations using a compact, config-driven syntax. Useful for formatting codes, ticket numbers, identifiers, or any string value in a consistent, declarative way.

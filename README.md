@@ -25,7 +25,7 @@ composer require ferryhopper/php-string-formatter
 ```php
 use StringFormatter\StringFormatter;
 
-$formatted = StringFormatter::apply('K563793', 'remove:space;replace:K:A;padAfterFirst:11:0'');
+$formatted = StringFormatter::apply('K563793', 'remove:space;replace:K:A;padAfterFirst:11:0');
 // Returns: "K 00000563793"
 ```
 

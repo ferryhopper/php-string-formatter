@@ -69,7 +69,7 @@ vendor/bin/phpunit
 
 ## 👨‍💻 Authors
 
-Maintained by the [Ferryhopper](https://ferryhopper.com) engineering team.  
+Maintained by the [Ferryhopper](https://www.ferryhopper.com) engineering team.  
 Initial development by [@vlahanas](https://github.com/vlahanas).
 
 ---

@@ -25,7 +25,7 @@ composer require ferryhopper/php-string-formatter
 ```php
 use StringFormatter\StringFormatter;
 
-$formatted = StringFormatter::apply('K563793', 'insertAfterFirst: :1;padAfterFirst:11:0');
+$formatted = StringFormatter::apply('K563793', 'remove:space;replace:K:A;padAfterFirst:11:0'');
 // Returns: "K 00000563793"
 ```
 
@@ -39,7 +39,6 @@ $formatted = StringFormatter::apply('K563793', 'insertAfterFirst: :1;padAfterFir
 | `padRight:length:char`     | Right-pads the string to `length` using `char`.                      |
 | `replace:search:replace`   | Replaces all occurrences of `search` with `replace`.                |
 | `remove:target`            | Removes all occurrences of `target`.                                |
-| `insertAfterFirst:char:n`  | Inserts `char` `n` times after the first character.                  |
 | `padAfterFirst:length:char`| Pads the part after the first character to `length` using `char`.    |
 
 ---

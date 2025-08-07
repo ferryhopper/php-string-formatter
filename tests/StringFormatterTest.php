@@ -7,44 +7,94 @@ use StringFormatter\StringFormatter;
 
 class StringFormatterTest extends TestCase
 {
-    public function testPadLeft()
+     public function testPadLeft()
     {
-        $this->assertEquals('000123', StringFormatter::padLeft('123', 6, '0'));
+        $result = StringFormatter::padLeft('123', 5, '0');
+        $this->assertEquals('00123', $result);
     }
 
     public function testPadRight()
     {
-        $this->assertEquals('123000', StringFormatter::padRight('123', 6, '0'));
+        $result = StringFormatter::padRight('123', 5, '0');
+        $this->assertEquals('12300', $result);
     }
 
     public function testReplace()
     {
-        $this->assertEquals('A-B-C', StringFormatter::replace('A_B_C', '_', '-'));
-        $this->assertEquals('A-B-C', StringFormatter::replace('A B C', 'space', '-'));
+        $result = StringFormatter::replace('A_B_C', '_', '-');
+        $this->assertEquals('A-B-C', $result);
+
+        $result = StringFormatter::replace('A B C', 'space', '-');
+        $this->assertEquals('A-B-C', $result);
     }
 
     public function testRemove()
     {
-        $this->assertEquals('ABC', StringFormatter::remove('A_B_C', '_'));
-        $this->assertEquals('ABC', StringFormatter::remove('A B C', 'space'));
+        $result = StringFormatter::remove('A_B_C', '_');
+        $this->assertEquals('ABC', $result);
+
+        $result = StringFormatter::remove('A B C', 'space');
+        $this->assertEquals('ABC', $result);
     }
 
-    public function testInsertAfterFirst()
+    public function testapplySingleStep()
     {
-        $this->assertEquals('K 123', StringFormatter::insertAfterFirst('K123', ' ', 1));
-        $this->assertEquals('K000123', StringFormatter::insertAfterFirst('K123', '0', 3));
+        $result = StringFormatter::apply('123', 'padLeft:5:0');
+        $this->assertEquals('00123', $result);
     }
 
-    public function testPadAfterFirst()
+    public function testapplyMultipleSteps()
     {
-        $this->assertEquals('K00123', StringFormatter::padAfterFirst('K123', 5, '0'));
+        $result = StringFormatter::apply('K123_45', 'replace:_:space;padLeft:10:0');
+        $this->assertEquals('000K123 45', $result);
     }
 
-    public function testApply()
+    public function testapplyWithUnknownFunction()
     {
-        $this->assertEquals(
-            'K 00000563793',
-            StringFormatter::apply('K563793', 'insertAfterFirst: :1;padAfterFirst:11:0')
-        );
+        $result = StringFormatter::apply('123', 'nonexistent:arg');
+        $this->assertEquals('123', $result); // fallback: return original input
+    }
+
+
+    public function testapplyHandlesWhitespace()
+    {
+        $result = StringFormatter::apply('123', ' padLeft : 5 : 0 ');
+        $this->assertEquals('00123', $result);
+    }
+
+    public function testPadAfterFirstPadsCorrectly()
+    {
+        $result = StringFormatter::padAfterFirst('K123', 5, '0');
+        $this->assertEquals('K00123', $result);
+    }
+
+    public function testPadAfterFirstPadsNothingIfExactLength()
+    {
+        $result = StringFormatter::padAfterFirst('K12345', 5, '0');
+        $this->assertEquals('K12345', $result);
+    }
+
+    public function testPadAfterFirstTruncatesNothingIfAlreadyLonger()
+    {
+        $result = StringFormatter::padAfterFirst('K1234567', 5, '0');
+        $this->assertEquals('K1234567', $result);
+    }
+
+    public function testPadAfterFirstWorksWithSpaces()
+    {
+        $result = StringFormatter::padAfterFirst('K123', 6, ' ');
+        $this->assertEquals('K   123', $result);
+    }
+
+    public function testPadAfterFirstOnEmptyString()
+    {
+        $result = StringFormatter::padAfterFirst('', 5, '0');
+        $this->assertEquals('', $result);
+    }
+
+    public function testPadAfterFirstOnOneCharString()
+    {
+        $result = StringFormatter::padAfterFirst('K', 3, '0');
+        $this->assertEquals('K000', $result);
     }
 }

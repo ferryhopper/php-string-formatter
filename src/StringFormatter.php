@@ -19,7 +19,7 @@ namespace StringFormatter;
  *   applyFormatting('K 563793', 'remove:space;replace:K:A;padAfterFirst:11:0') → returns "A00000563793"
  *
  * @param string $inputString The original string to be formatted
- * @param string $formatting   The formatting instructions as a semicolon-separated string
+ * @param string $formatting  The formatting instructions as a semicolon-separated string
  *
  * @return string The formatted string (or the original input if an error occurs)
  */
